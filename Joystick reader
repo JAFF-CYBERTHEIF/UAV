@@ -1,0 +1,44 @@
+import pygame
+
+# initialize pygame
+pygame.init()
+
+# initialize joystick
+joystick = pygame.joystick.Joystick(1)
+joystick.init()
+
+# print some joystick info
+print(f"Joystick Name: {joystick.get_name()}")
+print(f"Number of Buttons: {joystick.get_numbuttons()}")
+print(f"Number of Axes: {joystick.get_numaxes()}")
+
+# map button names to indices
+button_names = {
+    0: "Button 1",
+    1: "Button 2",
+    2: "Button 3",
+    3: "Button 4",
+    4: "L1",
+    5: "R1",
+    6: "L2",
+    7: "R2",
+    8: "Left Stick",
+    9: "START",
+    10: "Home",
+    11: "DPad"
+}
+
+# main loop
+while True:
+    # handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        elif event.type == pygame.JOYBUTTONDOWN:
+            button = joystick.get_button(event.button)
+            button_name = button_names.get(event.button, f"Button {event.button}")
+            print(f"{button_name} pressed")
+        elif event.type == pygame.JOYAXISMOTION:
+            axis = joystick.get_axis(event.axis)
+            print(f"Axis {event.axis}: {axis}")
