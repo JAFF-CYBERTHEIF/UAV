@@ -11,6 +11,8 @@ joystick.init()
 print(f"Joystick Name: {joystick.get_name()}")
 print(f"Number of Buttons: {joystick.get_numbuttons()}")
 print(f"Number of Axes: {joystick.get_numaxes()}")
+print(f"Number of HAT: {joystick.get_numhats()}")
+
 
 # map button names to indices
 button_names = {
@@ -42,3 +44,6 @@ while True:
         elif event.type == pygame.JOYAXISMOTION:
             axis = joystick.get_axis(event.axis)
             print(f"Axis {event.axis}: {axis}")
+        elif event.type == pygame.JOYHATMOTION:
+            hat = joystick.get_hat(event.hat)
+            print(f"HAT {event.hat}: {hat}")
