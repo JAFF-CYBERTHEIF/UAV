@@ -1,15 +1,16 @@
+import cv2
+import numpy as np
 import socket
+import sys
+import pickle
+import struct
 
-HOST = 'localhost'
-PORT = 5555
+clientsocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+clientsocket.connect(('localhost',8089))
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect((HOST, PORT))
-
+cap=cv2.VideoCapture(0)
 while True:
-    message = input("Enter message to send: ")
-    client_socket.sendall(message.encode())
-    data = client_socket.recv(1024).decode()
-    print(f"Received message: {data}")
-    
-client_socket.close()
+    ret,frame=cap.read()
+    data = pickle.dumps(frame)
+    message_size = struct.pack("L", len(data))
+    clientsocket.sendall(message_size + data)
