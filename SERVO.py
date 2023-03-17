@@ -1,20 +1,26 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Mar 17 08:31:29 2023
 
-import RPi.GPIO as GPIO
+@author: admin
+"""
+
+import Rpi.GPIO as GPIO
 from time import sleep
 
-servo = 12				# PWM pin connected to servo
-GPIO.setwarnings(False)			#disable warnings
-GPIO.setmode(GPIO.BOARD)		#set pin numbering system
-GPIO.setup(servo ,GPIO.OUT)
-pi_pwm = GPIO.PWM(servo, 500)		#create PWM instance with frequency
-pi_pwm.start(0)				#start PWM of required Duty Cycle 
-while True:
-    for duty in range(0,101,1):
-        pi_pwm.ChangeDutyCycle(duty) #provide duty cycle in the range 0-100
-        sleep(0.01)
-    #sleep(0.5)
-    
-    for duty in range(100,-1,-1):
-        pi_pwm.ChangeDutyCycle(duty)
-        sleep(0.01)
-    #sleep(0.5)
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(11,GPIO.OUT)
+
+def SetAngle(angle,pin):
+    pwm = GPIO.PWM(pin,50)
+    pwm.start(0)
+    duty = angle / 18 + 2
+    pwm.ChangeDutyCycle(duty)
+    sleep(0.5)
+    pwm.ChangeDutyCycle(0)
+
+pin=11 #GPIO pin (SERVO MOTOR)
+angle=90 #Angle of the servo motor
+
+SetAngle(angle, pin)   #call the function to set angle to the servo motor 
