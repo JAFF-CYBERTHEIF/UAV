@@ -32,32 +32,10 @@ void loop() {
     int dateEnd = data.indexOf(",", dateStart);
     String date = data.substring(dateStart, dateEnd);
 
-    Serial.print("Time: ");
-    Serial.println(time);
-    Serial.print("Date: ");
-    Serial.println(date);
-    Serial.print("Latitude: ");
-    Serial.println(latitude, 6);
-    Serial.print("Longitude: ");
-    Serial.println(longitude, 6);
-    Serial.print("Speed: ");
-    Serial.print(speed, 2);
-    Serial.println(" knots");
-    Serial.print("Course: ");
-    Serial.print(course, 2);
-    Serial.println(" degrees");
-
-  } else if (data.startsWith("$GNGGA") || data.startsWith("$GPGGA")) {
-    // Extract altitude from GGA sentence
-    int comma4 = data.indexOf(",", data.indexOf(",") + 1);
-    int comma9 = data.indexOf(",", comma4 + 1);
-
-    float altitude = data.substring(comma4 + 1, comma9).toFloat();
-
-    Serial.print("Altitude: ");
-    Serial.print(altitude, 2);
-    Serial.println(" meters");
-  }
+    // Concatenate the data into a comma-separated list
+    String output = time + "," + date + "," + String(latitude, 6) + "," + String(longitude, 6) + "," + String(speed, 2) + "," + String(course, 2);
+    Serial.println(output);
+    
+  } 
 }
-
 
